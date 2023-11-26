@@ -21,11 +21,10 @@ def Connection():
 
 
 def create_database(conn, database_name):
-    connection = Connection()
     try:
         # Connect to the default PostgreSQL database (usually 'postgres')
-        connection.set_session(autocommit=True)  # Set autocommit to True to avoid transaction issues
-        cursor = connection.cursor()
+        conn.set_session(autocommit=True)  # Set autocommit to True to avoid transaction issues
+        cursor = conn.cursor()
 
         # Check if the database already exists
         cursor.execute("SELECT 1 FROM pg_database WHERE datname = %s", (database_name,))
@@ -44,8 +43,8 @@ def create_database(conn, database_name):
                             format='%(asctime)s - %(levelname)s - %(message)s')
         logging.error(f'Error creating the database: {e}')
     finally:
-        if connection:
-            connection.close()
+        if conn:
+            conn.close()
 
 
 # Example usage
