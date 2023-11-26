@@ -1,6 +1,7 @@
 import psycopg2 as psy
 import logging
 
+
 def Connection():
     try:
         connect = psy.connect(host="127.0.0.1", dbname="postgres", user="postgres", password="hp14b7860")
@@ -14,6 +15,7 @@ def Connection():
                             format='%(asctime)s - %(levelname)s - %(message)s')
         logging.error(f'Error connecting to PostgreSQL: {e}')
         return None
+
 
 def DB():
     conn = Connection()
@@ -42,6 +44,7 @@ def DB():
             logging.error(f'Error executing SQL query: {e}')
         finally:
             conn.close()
+
 
 if __name__ == "__main__":
     DB()  # calls the DB function.
