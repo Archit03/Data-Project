@@ -1,0 +1,78 @@
+2023-11-26 13:19:53,090 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+
+2023-11-26 13:22:04,256 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+
+2023-11-26 13:22:57,001 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+
+2023-11-26 13:23:33,088 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+
+2023-11-26 13:23:54,058 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+
+2023-11-26 13:24:01,855 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+
+2023-11-26 13:24:55,543 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+
+2023-11-26 13:31:38,849 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+
+2023-11-26 13:32:25,498 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+
+2023-11-26 13:32:27,994 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+
+2023-11-26 13:36:16,007 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+
+2023-11-26 13:37:25,469 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+
+2023-11-26 13:39:03,169 - ERROR - Error executing SQL query: CREATE DATABASE cannot run inside a transaction block
+
+2023-11-26 13:42:27,000 - ERROR - Error executing SQL query: CREATE DATABASE cannot run inside a transaction block
+
+2023-11-26 13:43:18,959 - ERROR - Error executing SQL query: CREATE DATABASE cannot run inside a transaction block
+
+2023-11-26 13:45:22,278 - ERROR - Error executing SQL query: CREATE DATABASE cannot run inside a transaction block
+
+2023-11-26 13:47:19,777 - ERROR - Error executing SQL query: CREATE DATABASE cannot run inside a transaction block
+
+2023-11-26 13:50:03,986 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+
+2023-11-26 13:50:37,067 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+
+2023-11-26 13:53:34,164 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+
+2023-11-26 14:06:54,945 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+
+2023-11-26 14:09:41,351 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+

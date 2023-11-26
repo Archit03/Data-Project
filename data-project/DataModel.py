@@ -3,9 +3,9 @@ import logging
 
 
 def Connection():
-    global connect
     try:
-        connect = psy.connect("host=127.0.0.1 dbname=postgres user=postgres password=hp14b7860")
+        connect = psy.connect(host="127.0.0.1", port=1024, dbname="postgres", user="postgres", password="hp14b7860")
+        print("Successfully connected to the PostgreSQL database")
         return connect
     except psy.Error as e:
         print("Error couldn't make a connection to the PostgreSQL database")
@@ -22,18 +22,15 @@ def DB():
             # Perform operations with the PostgreSQL connection
             cursor = conn.cursor()
 
-            # Example: Create a database (ensure you have the necessary privileges)
+            # Example: Create a database if it does not exist
             cursor.execute("CREATE DATABASE IF NOT EXISTS STUDENT_INFO")
 
             # Commit changes to the database
             conn.commit()
 
-            # Example: Select data from a table (replace 'your_table' with an actual table name)
-            cursor.execute("SELECT * FROM your_table")
-            result = cursor.fetchall()
-            print(result)
+            print("Database STUDENT_INFO created successfully")
+            logging.info("Database STUDENT_INFO created successfully")
 
-            cursor.close()
         except psy.Error as e:
             print("Error executing SQL query")
             logging.basicConfig(filename='QueryError_log.txt', level=logging.ERROR,
@@ -44,5 +41,4 @@ def DB():
 
 
 if __name__ == "__main__":
-    DB()  # calls the DB function. Just fix errors, don't change the code.
-
+    DB()  # calls the DB function.
