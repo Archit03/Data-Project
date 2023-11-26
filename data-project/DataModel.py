@@ -5,6 +5,9 @@ import logging
 def Connection():
     try:
         connect = psy.connect(host="127.0.0.1", dbname="postgres", user="postgres", password="hp14b7860")
+        print("Successfully connected to the PostgreSQL database")
+        # Set autocommit to True to avoid running the CREATE DATABASE inside a transaction
+        connect.set_session(autocommit=True)
         return connect
     except psy.Error as e:
         print("Error couldn't make a connection to the PostgreSQL database")
@@ -22,14 +25,19 @@ def DB():
             cursor = conn.cursor()
 
             # Example: Create a database if it does not exist
-            cursor.execute("CREATE DATABASE STUDENT_INFO")
+            cursor.execute("CREATE DATABASE IF NOT EXISTS STUDENT_INFO")
 
-            # Commit changes to the database
-            conn.commit()
+            # Check if the database was created successfully
+            cursor.execute("SELECT datname FROM pg_database WHERE datname='STUDENT_INFO'")
+            result = cursor.fetchone()
+            if result:
+                print("Database STUDENT_INFO created successfully")
+                logging.info("Database STUDENT_INFO created successfully")
+            else:
+                print("Database creation failed")
+                logging.error("Database creation failed")
 
-            print("Database STUDENT_INFO created successfully")
-            logging.info("Database STUDENT_INFO created successfully")
-
+            cursor.close()
         except psy.Error as e:
             print("Error executing SQL query")
             logging.basicConfig(filename='QueryError_log.txt', level=logging.ERROR,

@@ -14,3 +14,7 @@ LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
 
 2023-11-26 14:51:01,627 - ERROR - Error executing SQL query: CREATE DATABASE cannot run inside a transaction block
 
+2023-11-26 14:53:35,174 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+
