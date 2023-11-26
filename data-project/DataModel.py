@@ -22,7 +22,7 @@ def DB():
             cursor = conn.cursor()
 
             # Example: Create a database if it does not exist
-            cursor.execute("CREATE DATABASE IF NOT EXISTS STUDENT_INFO")
+            cursor.execute("CREATE DATABASE STUDENT_INFO")
 
             # Commit changes to the database
             conn.commit()

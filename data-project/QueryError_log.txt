@@ -10,3 +10,7 @@ LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
 LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
                            ^
 
+2023-11-26 14:50:53,741 - ERROR - Error executing SQL query: CREATE DATABASE cannot run inside a transaction block
+
+2023-11-26 14:51:01,627 - ERROR - Error executing SQL query: CREATE DATABASE cannot run inside a transaction block
+
