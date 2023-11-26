@@ -88,9 +88,10 @@ def query(database_name, table_name, data):
                 # Add data to the table
                 add_data_to_table(connect, table_name, data)
 
-            else:
+            elif table_has_data:
                 print(f"Table {table_name} has data. No need to create or add data.")
-
+            else:
+                cursor.execute("select * from student_info limit 5;")
         finally:
             connect.close()
 
@@ -99,7 +100,12 @@ def query(database_name, table_name, data):
 if __name__ == "__main__":
     database_name = "your_database"
     table_name = "student_info"
-    data_to_add = {'name': 'John Doe', 'age': 20, 'gender': 'Male', 'subject': 'Math', 'marks': 85.5}
-
+    sample_data = [
+        {'name': 'Alice Smith', 'age': 22, 'gender': 'Female', 'subject': 'Physics', 'marks': 78.5},
+        {'name': 'Bob Johnson', 'age': 21, 'gender': 'Male', 'subject': 'Chemistry', 'marks': 92.0},
+        {'name': 'Eva Williams', 'age': 23, 'gender': 'Female', 'subject': 'Biology', 'marks': 87.5},
+        {'name': 'Charlie Brown', 'age': 20, 'gender': 'Male', 'subject': 'History', 'marks': 65.0},
+        {'name': 'Grace Davis', 'age': 22, 'gender': 'Female', 'subject': 'Computer Science', 'marks': 89.5}
+    ]
     # Perform operations with the PostgreSQL connection
-    query(database_name, table_name, data_to_add)
+    query(database_name, table_name, sample_data)
