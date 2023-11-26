@@ -1,0 +1,48 @@
+# PostgreSQL Database Creation Script Documentation
+
+## Introduction
+This Python script connects to a PostgreSQL database server and creates a new database if it does not already exist. The script uses the psycopg2 library to interact with PostgreSQL.
+
+## Prerequisites
+- Python installed on your system
+- PostgreSQL database server installed and running
+- psycopg2 library installed (`pip install psycopg2`)
+
+## Usage
+1. Open the script in a text editor or an integrated development environment (IDE).
+2. Update the PostgreSQL connection parameters in the `Connection` function to match your database server configuration.
+3. Run the script.
+
+```bash
+python script_name.py
+Save to grepper
+Functions
+Connection()
+Establishes a connection to the PostgreSQL database server.
+Parameters:
+host: The hostname or IP address of the PostgreSQL server.
+dbname: The name of the initial database to connect to.
+user: The user to connect as.
+password: The password to be used for authentication.
+Returns:
+A connection object if successful, otherwise returns None.
+Prints a success or error message based on the connection status.
+create_database(conn, database_name)
+Creates a new PostgreSQL database if it does not already exist.
+Parameters:
+conn: A valid PostgreSQL connection object.
+database_name: The name of the database to be created.
+Checks if the database exists, and creates it if not.
+Prints success or existing database messages.
+Logs errors to 'error_log.txt'.
+# Example usage
+if __name__ == "__main__":
+    connection = Connection()  # Get a PostgreSQL connection
+    if connection:
+        create_database(connection, "student_info")
+Logging
+Errors and important information are logged to 'error_log.txt'.
+
+Notes
+Ensure that psycopg2 is installed (pip install psycopg2).
+Review and update PostgreSQL connection parameters in the Connection function.
