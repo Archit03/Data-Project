@@ -4,7 +4,7 @@ import logging
 
 def Connection():
     try:
-        connect = psy.connect(host="127.0.0.1", dbname="postgres", user="postgres",
+        connect = psy.connect(host="127.0.0.1", dbname="student_info", user="postgres",
                               password="hp14b7860")
         print("Successfully connected to the PostgreSQL database")
         connect.set_session(autocommit=True)  # Set autocommit to True to avoid transaction issues
