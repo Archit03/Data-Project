@@ -2,3 +2,11 @@
 LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
                            ^
 
+2023-11-26 14:50:07,262 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+
+2023-11-26 14:50:13,010 - ERROR - Error executing SQL query: syntax error at or near "NOT"
+LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
+                           ^
+
