@@ -18,3 +18,5 @@ LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
 LINE 1: CREATE DATABASE IF NOT EXISTS STUDENT_INFO
                            ^
 
+2023-11-26 14:56:23,351 - ERROR - Error executing SQL query: database "student_info" already exists
+
