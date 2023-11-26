@@ -1,0 +1,6 @@
+2023-11-26 14:55:41,250 - ERROR - Error connecting to PostgreSQL: connection to server at "127.0.0.1", port 1024 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
+2023-11-26 14:55:52,795 - ERROR - Error connecting to PostgreSQL: connection to server at "127.0.0.1", port 1024 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
