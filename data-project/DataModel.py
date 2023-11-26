@@ -77,6 +77,7 @@ def DB():
             # Sample data to be added to the table
             data_to_add = {'name': 'John Doe', 'age': 20, 'gender': 'Male', 'subject': 'Math', 'marks': 85.5}
 
+
             # Perform operations with the PostgreSQL connection
             add_data_to_table(conn, table_name, data_to_add)
 
