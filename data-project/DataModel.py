@@ -4,7 +4,7 @@ import logging
 
 def Connection():
     try:
-        connect = psy.connect(host="127.0.0.1", dbname="student_info", user="postgres",
+        connect = psy.connect(host="127.0.0.1", dbname="postgres", user="postgres",
                               password="hp14b7860")
         print("Successfully connected to the PostgreSQL database")
         connect.set_session(autocommit=True)  # Set autocommit to True to avoid transaction issues
@@ -17,32 +17,24 @@ def Connection():
         return None
 
 
-def create_table(conn):
+def create_database(conn, database_name):
     try:
         cursor = conn.cursor()
+        cursor.execute("SELECT 1 FROM pg_database WHERE datname = %s", (database_name,))
+        database_exists = cursor.fetchone() is not None
 
-        # Example: Create a table
-        create_table_query = '''
-            CREATE TABLE IF NOT EXISTS student_info (
-                student_id SERIAL PRIMARY KEY,
-                name VARCHAR(255),
-                age INTEGER,
-                gender VARCHAR(10),
-                subject VARCHAR(255),
-                marks FLOAT
-            );
-        '''
-        cursor.execute(create_table_query)
+        if not database_exists:
+            print(f"Database {database_name} does not exist. Creating...")
+            cursor.execute(f"CREATE DATABASE {database_name}")
+            print(f"Database {database_name} created successfully")
 
-        print("Table created successfully")
-        logging.info("Table created successfully")
-
-        cursor.close()
     except psy.Error as e:
-        print("Error executing SQL query")
+        print("Error creating the database")
         logging.basicConfig(filename='QueryError_log.txt', level=logging.ERROR,
                             format='%(asctime)s - %(levelname)s - %(message)s')
-        logging.error(f'Error executing SQL query: {e}')
+        logging.error(f'Error creating the database: {e}')
+    finally:
+        cursor.close()
 
 
 def add_data_to_table(conn, table_name, data):
@@ -64,26 +56,50 @@ def add_data_to_table(conn, table_name, data):
         logging.error(f'Error executing SQL query: {e}')
 
 
-def DB():
-    conn = Connection()
-    if conn:
+def query(database_name, table_name, data):
+    connect = Connection()
+
+    if connect:
         try:
-            # Create the table if it doesn't exist
-            create_table(conn)
+            create_database(connect, database_name)
 
-            # Take the table name as input (you can modify this based on your use case)
-            table_name = "student_info"
+            # Check if the table exists and has data
+            cursor = connect.cursor()
+            cursor.execute(f"SELECT EXISTS (SELECT 1 FROM {table_name} LIMIT 1);")
+            table_has_data = cursor.fetchone()[0]
 
-            # Sample data to be added to the table
-            data_to_add = {'name': 'John Doe', 'age': 20, 'gender': 'Male', 'subject': 'Math', 'marks': 85.5}
+            if not table_has_data:
+                print(f"Table {table_name} either does not exist or has no data. Creating and adding data...")
 
+                # Create the table
+                cursor.execute(f'''
+                    CREATE TABLE IF NOT EXISTS {table_name} (
+                        student_id SERIAL PRIMARY KEY,
+                        name VARCHAR(255),
+                        age INTEGER,
+                        gender VARCHAR(10),
+                        subject VARCHAR(255),
+                        marks FLOAT
+                    );
+                ''')
 
-            # Perform operations with the PostgreSQL connection
-            add_data_to_table(conn, table_name, data_to_add)
+                print("Table created successfully")
+
+                # Add data to the table
+                add_data_to_table(connect, table_name, data)
+
+            else:
+                print(f"Table {table_name} has data. No need to create or add data.")
 
         finally:
-            conn.close()
+            connect.close()
 
 
+# Example usage
 if __name__ == "__main__":
-    DB()  # calls the DB function.
+    database_name = "your_database"
+    table_name = "student_info"
+    data_to_add = {'name': 'John Doe', 'age': 20, 'gender': 'Male', 'subject': 'Math', 'marks': 85.5}
+
+    # Perform operations with the PostgreSQL connection
+    query(database_name, table_name, data_to_add)

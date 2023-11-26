@@ -18,3 +18,6 @@
 
 2023-11-26 15:40:40,140 - ERROR - Error connecting to PostgreSQL: connection to server at "127.0.0.1", port 5432 failed: FATAL:  password authentication failed for user "postgres"
 
+2023-11-26 16:27:38,720 - ERROR - Error connecting to PostgreSQL: connection to server at "127.0.0.1", port 1024 failed: Connection refused (0x0000274D/10061)
+	Is the server running on that host and accepting TCP/IP connections?
+
