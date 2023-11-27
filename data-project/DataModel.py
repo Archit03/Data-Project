@@ -87,10 +87,11 @@ if __name__ == "__main__":
     connection = Connection()  # Get a PostgreSQL connection
     columns = {
         "Student_ID": "INTEGER PRIMARY KEY",
-        "Student_Age":  "INTEGER",
+        "Student_Age": "INTEGER",
         "Student_Name": "VARCHAR",
         "Phone": "BIGINT"
     }
     if connection:
         create_database(connection, "student_info")
-        create_Table(connection, "Student", columns)
+        if create_database:
+            create_Table(connection, "Student", columns)
