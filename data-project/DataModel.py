@@ -74,8 +74,8 @@ def create_Table(conn, table_name, column):
         cursor.close()
 
 
-def add_data_to_table():
-    return None
+def add_data_to_table(conn, data, table_name):
+    conn = conn.cursor()
 
 
 def query():
@@ -85,5 +85,12 @@ def query():
 # Example usage
 if __name__ == "__main__":
     connection = Connection()  # Get a PostgreSQL connection
+    columns = {
+        "Student_ID": "INTEGER PRIMARY KEY",
+        "Student_Age":  "INTEGER",
+        "Student_Name": "VARCHAR",
+        "Phone": "BIGINT"
+    }
     if connection:
         create_database(connection, "student_info")
+        create_Table(connection, "Student", columns)
