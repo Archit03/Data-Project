@@ -47,10 +47,8 @@ def create_database(conn, database_name):
             conn.close()
 
 
-
 # Example usage
 if __name__ == "__main__":
     connection = Connection()  # Get a PostgreSQL connection
     if connection:
         create_database(connection, "student")
-
