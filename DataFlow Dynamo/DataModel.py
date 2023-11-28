@@ -117,13 +117,18 @@ if __name__ == "__main__":
     }
 
     sample_data = {
-        "Student_Age": [25, 24],
-        "Student_Name": ["John Doe", "Archit Sood"],
-        "Phone": [1234567890, 3284883274]
+        "Student_Age": [25, 24, 23],
+        "Student_Name": ["John Doe", "Archit Sood", "ABC"],
+        "Phone": [1234567890, 3284883274, 324873298]
     }
 
     tablename = "Student"
-    if connection:
-        create_database(connection, "student_info")
-        create_Table(connection, tablename, columns)
-        add_data_to_table(connection, sample_data, tablename)
+
+    # Create the database
+    create_database(connection, "Student_info")
+
+    # Create the table
+    create_Table(connection, tablename, columns)
+
+    # Add data to the table
+    add_data_to_table(connection, sample_data, tablename)
