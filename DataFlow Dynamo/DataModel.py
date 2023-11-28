@@ -128,7 +128,7 @@ if __name__ == "__main__":
     create_database(connection, "Student")
 
     # Create the table
-    create_Table(connection, tablename, columns)
+    print(create_Table(connection, tablename, columns))
 
     # Add data to the table
-    add_data_to_table(connection, sample_data, tablename)
+    #add_data_to_table(connection, sample_data, tablename)
