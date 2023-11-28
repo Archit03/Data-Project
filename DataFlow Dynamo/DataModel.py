@@ -75,28 +75,31 @@ def create_Table(conn, table_name, column):
 
 def add_data_to_table(conn, data, table_name):
     cursor = conn.cursor()
+
     try:
-        insert_query = f"INSERT INTO {table_name} ("
+        # Assuming all lists in data have the same length
+        data_length = len(list(data.values())[0])
 
-        columns = ','.join(data.keys())
-        insert_query += f"{columns}) VALUES ("
+        for i in range(data_length):
+            values = [data[column][i] for column in data]
+            placeholders = ', '.join(['%s'] * len(values))
 
-        values = ','.join(['%s' for _ in data.values()])
-        insert_query += f"{values})"
+            # Construct the INSERT query
+            insert_query = f"INSERT INTO {table_name} ({', '.join(data.keys())}) VALUES ({placeholders});"
 
-        cursor.execute(insert_query, tuple(data.values()))
-        conn.commit()
-        print(f"Data added to to the '{table_name}' table successfully")
-        pass
+            # Execute the query
+            cursor.execute(insert_query, tuple(values))
+            conn.commit()
+
+        print(f"Data added to the table '{table_name}' successfully.")
 
     except psy.Error as e:
-        print("Error adding data to the table")
-        logging.basicConfig(filename='error_log.txt', level=logging.ERROR,
-                            format='%(asctime)s - %(levelname)s - %(message)s')
-        logging.error(f'Error adding data to the table: {e}')
+        error_message = f"Error adding data to table '{table_name}': {e}"
+        print(error_message)
+        logging.error(error_message)
+
     finally:
-        if cursor:
-            cursor.close()
+        cursor.close()
 
 
 def query():
