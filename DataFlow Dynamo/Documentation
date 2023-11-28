@@ -1,118 +1,118 @@
-Data Engineering project
-Overview
-Briefly describe the purpose and functionality of the project.
+Dataflow Dynamo is Python made PostgreSQL data engineering project.
+# DataModel PostgreSQL Interaction
 
-Usage
-Open the script in a text editor or an integrated development environment (IDE).
-Update the PostgreSQL connection parameters in the Connection function to match your database server configuration.
-Run the script.
-bash
-Copy code
-python script_name.py
-Save to grepper
-Functions
-1. Connection()
-Parameters:
+## Introduction
 
-host: The hostname or IP address of the PostgreSQL server.
-dbname: The name of the initial database to connect to.
-user: The user to connect as.
-password: The password to be used for authentication.
-Returns:
+This Python script interacts with a PostgreSQL database to create tables and insert data. It includes functions for creating a connection, creating a database, creating a table, and inserting data into the table.
+
+## Prerequisites
+
+- Python 3.x
+- psycopg2 library (`pip install psycopg2`)
+- PostgreSQL installed and running
+- PostgreSQL server accessible with provided credentials
+
+## Functions
+
+### 1. `Connection()`
+
+Establishes a connection to the PostgreSQL database server.
+
+#### Parameters
+
+- `host`: The hostname or IP address of the PostgreSQL server.
+- `dbname`: The name of the initial database to connect to.
+- `user`: The user to connect as.
+- `password`: The password to be used for authentication.
+
+#### Returns
 
 A connection object if successful, otherwise returns None.
-Prints:
 
-A success or error message based on the connection status.
-2. create_database(conn, database_name)
+Prints a success or error message based on the connection status.
+
+### 2. `create_database(conn, database_name)`
+
 Creates a new PostgreSQL database if it does not already exist.
 
-Parameters:
+#### Parameters
 
-conn: A valid PostgreSQL connection object.
-database_name: The name of the database to be created.
-Checks:
+- `conn`: A valid PostgreSQL connection object.
+- `database_name`: The name of the database to be created.
 
-If the database exists, and creates it if not.
-Prints:
+Checks if the database exists, and creates it if not.
 
-Success or existing database messages.
-Logs:
+Prints success or existing database messages.
 
-Errors to 'error_log.txt'.
-Example usage:
-python
-Copy code
+Logs errors to 'error_log.txt'.
+
+### 3. `create_Table(conn, table_name, column)`
+
+Creates a new table in the PostgreSQL database.
+
+#### Parameters
+
+- `conn`: A valid PostgreSQL connection object.
+- `table_name`: The name of the table to be created.
+- `column`: A dictionary specifying the columns and their data types for the table.
+
+Iterates through the columns and their data types to create the table.
+
+Prints a success message.
+
+Logs errors to 'error_log.txt'.
+
+### 4. `add_data_to_table(conn, data, table_name)`
+
+Inserts data into an existing table in the PostgreSQL database.
+
+#### Parameters
+
+- `conn`: A valid PostgreSQL connection object.
+- `data`: A dictionary containing the data to be inserted into the table.
+- `table_name`: The name of the table where data will be inserted.
+
+Iterates through the data dictionary to construct and execute INSERT queries.
+
+Prints a success message.
+
+Logs errors to 'error_log.txt'.
+
+### 5. `query()`
+
+Placeholder function for future database queries.
+
+Returns None.
+
+## Example Usage
+
+```python
 if __name__ == "__main__":
     connection = Connection()  # Get a PostgreSQL connection
+
+    columns = {
+        "Student_ID": "INTEGER PRIMARY KEY",
+        "Student_Age": "INTEGER",
+        "Student_Name": "VARCHAR",
+        "Phone": "BIGINT"
+    }
+
+    sample_data = {
+        "Student_Age": [25, 24],
+        "Student_Name": ["John Doe", "Archit Sood"],
+        "Phone": [1234567890, 3284883274]
+    }
+
     if connection:
         create_database(connection, "student_info")
-Save to grepper
+
+        if create_database:
+            create_Table(connection, "Student", columns)
+            add_data_to_table(connection, sample_data, "Student")
 Logging
 Errors and important information are logged to 'error_log.txt'.
 
 Notes
-Ensure that psycopg2 and additional dependencies are installed (run the requirements.tex file).
+Ensure that psycopg2 and additional dependencies are installed (run the requirements.txt file).
 Review and update PostgreSQL connection parameters in the Connection function.
-1. Creating a Table:
-The create_Table function allows for the creation of a table in a PostgreSQL database.
-
-Parameters:
-conn: PostgreSQL connection object.
-table_name: Name of the table to be created.
-columns: A dictionary specifying the columns and their data types for the table.
-Example Usage:
-python
-Copy code
-columns = {
-    'id': 'SERIAL PRIMARY KEY',
-    'name': 'VARCHAR(255)',
-    'age': 'INTEGER',
-    'gender': 'VARCHAR(10)'
-}
-create_Table(connection, "example_table", columns)
-Save to grepper
-2. Adding Data to a Table:
-The add_data_to_table function inserts data into an existing table in the PostgreSQL database.
-
-Parameters:
-conn: PostgreSQL connection object.
-table_name: Name of the table where data will be inserted.
-data: A dictionary containing the data to be inserted into the table.
-Example Usage:
-python
-Copy code
-data = {'name': 'John Doe', 'age': 25, 'gender': 'Male'}
-add_data_to_table(connection, "example_table", data)
-Save to grepper
-3. Querying the Database:
-The query function checks if a table exists, creates it if necessary, and adds data if the table is empty.
-
-Parameters:
-database_name: Name of the PostgreSQL database.
-table_name: Name of the table to be queried.
-data: A dictionary containing the data to be added to the table if it is empty.
-Example Usage:
-python
-Copy code
-data = {'name': 'Jane Doe', 'age': 30, 'gender': 'Female'}
-query("example_database", "example_table", data)
-Save to grepper
-4. Testing:
-The test_create_table, test_add_data_to_table, and test_query functions in the test script demonstrate how to use the newly added functionalities.
-
-Example Test Usage:
-python
-Copy code
-test_create_table()
-test_add_data_to_table()
-test_query()
-Save to grepper
-5. Error Handling:
-Appropriate error handling is implemented using try-except blocks to catch and log errors during database operations. Error messages are logged to the "error_log.txt" file.
-
-6. Logging:
-The logging module is utilized to log error messages and information to text files. Error logs are stored in "error_log.txt," and query logs are stored in "QueryError_log.txt."
-
-7. Testing Script:
-The provided testing script (test_script.py) demonstrates how to run tests for the implemented functionalities. Ensure the PostgreSQL server is running and accessible before executing the tests.
+The script assumes all lists in the data dictionary have the same length.

@@ -33,3 +33,11 @@ LINE 1: ... Student (Student_Age,Student_Name,Phone) VALUES (ARRAY[25,2...
                                                              ^
 HINT:  You will need to rewrite or cast the expression.
 
+2023-11-28 11:04:41,635 - ERROR - Error creating the database: database "student" already exists
+
+2023-11-28 11:06:26,628 - ERROR - Error creating the database: database "student_info" already exists
+
+2023-11-28 11:13:39,129 - ERROR - Error creating the database: database "student_info" already exists
+
+2023-11-28 11:14:07,663 - ERROR - Error creating the database: database "student_info" already exists
+
