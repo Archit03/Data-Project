@@ -41,3 +41,5 @@ HINT:  You will need to rewrite or cast the expression.
 
 2023-11-28 11:14:07,663 - ERROR - Error creating the database: database "student_info" already exists
 
+2023-11-28 11:17:17,398 - ERROR - Error creating the database: database "student_info" already exists
+
