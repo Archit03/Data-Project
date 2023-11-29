@@ -61,3 +61,7 @@ HINT:  You will need to rewrite or cast the expression.
 
 2023-11-28 13:39:20,924 - ERROR - Error creating the database: database "student" already exists
 
+2023-11-28 13:53:31,934 - ERROR - Error connecting to PostgreSQL: connection to server at "127.0.0.1", port 5432 failed: FATAL:  password authentication failed for user "postgres"
+
+2023-11-28 14:09:38,658 - ERROR - Error connecting to PostgreSQL: connection to server at "127.0.0.1", port 5432 failed: FATAL:  password authentication failed for user "postgres"
+

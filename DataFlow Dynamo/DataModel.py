@@ -48,8 +48,9 @@ def create_database(conn, database_name):
 
 
 def create_Table(conn, table_name, column):
-    cursor = conn.cursor()
     try:
+        cursor = conn.cursor()
+
         create_table_query = f"CREATE TABLE IF NOT EXISTS {table_name} ("
 
         for col, data_type in column.items():
@@ -64,10 +65,10 @@ def create_Table(conn, table_name, column):
         print(f"Table '{table_name}' created successfully.")
 
     except psy.Error as e:
-        print("Error adding data to the table")
+        print(f"Error creating table '{table_name}': {e}")
         logging.basicConfig(filename='error_log.txt', level=logging.ERROR,
                             format='%(asctime)s - %(levelname)s - %(message)s')
-        logging.error(f'Error adding data to the table: {e}')
+        logging.error(f'Error creating table: {e}')
     finally:
         if cursor:
             cursor.close()
@@ -117,18 +118,13 @@ if __name__ == "__main__":
     }
 
     sample_data = {
-        "Student_Age": [25, 23],
+        "Student_Age": [25, 24],
         "Student_Name": ["John Doe", "Archit Sood"],
-        "Phone": [1234567890, 287389271372]
+        "Phone": [1234567890, 3284883274]
     }
 
     tablename = "Student"
-
-    # Create the database
-    create_database(connection, "Student")
-
-    # Create the table
-    print(create_Table(connection, tablename, columns))
-
-    # Add data to the table
-    #add_data_to_table(connection, sample_data, tablename)
+    if connection:
+        create_database(connection, "student_info")
+        create_Table(connection, tablename, columns)
+        add_data_to_table(connection, sample_data, tablename)
