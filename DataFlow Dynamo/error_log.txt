@@ -65,3 +65,11 @@ HINT:  You will need to rewrite or cast the expression.
 
 2023-11-28 14:09:38,658 - ERROR - Error connecting to PostgreSQL: connection to server at "127.0.0.1", port 5432 failed: FATAL:  password authentication failed for user "postgres"
 
+2023-11-29 13:22:07,910 - ERROR - Error creating table 'Student': schema "your_schema" does not exist
+LINE 1: CREATE TABLE IF NOT EXISTS your_schema.Student (Student_ID S...
+                                   ^
+
+2023-11-29 13:22:48,002 - ERROR - Error creating table 'Student': syntax error at or near "."
+LINE 1: CREATE TABLE IF NOT EXISTS.Student (Student_ID SERIAL PRIMAR...
+                                  ^
+
