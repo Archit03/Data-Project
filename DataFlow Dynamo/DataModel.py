@@ -2,36 +2,30 @@ import psycopg2 as psy
 import logging
 
 
-def Connection():
+def setup_logging():
+    logging.basicConfig(filename='error_log.txt', level=logging.ERROR,
+                        format='%(asctime)s - %(levelname)s - %(message)s')
+
+
+def connection():
     try:
-        connect = psy.connect(host="127.0.0.1", dbname="postgres", user="postgres", password="root")
-        if connect:
+        with psy.connect(host="127.0.0.1", dbname="postgres", user="postgres", password="root") as conn:
             print("Successfully connected to the PostgreSQL database")
-        else:
-            print("An error occurred, please check the logs.")
-        connect.set_session(autocommit=True)  # Set autocommit to True to avoid transaction issues
-        return connect
+            conn.set_session(autocommit=True)
+            return conn
     except psy.Error as e:
         print("Error connecting to PostgreSQL database")
-        logging.basicConfig(filename='error_log.txt', level=logging.ERROR,
-                            format='%(asctime)s - %(levelname)s - %(message)s')
         logging.error(f'Error connecting to PostgreSQL: {e}')
         return None
 
 
 def create_database(conn, database_name):
-    cursor = None
+    cursor = conn.cursor()
     try:
-        # Connect to the default PostgreSQL database (usually 'postgres')
-        conn.set_session(autocommit=True)  # Set autocommit to True to avoid transaction issues
-        cursor = conn.cursor()
-
-        # Check if the database already exists
         cursor.execute("SELECT 1 FROM pg_database WHERE datname = %s", (database_name,))
         database_exists = cursor.fetchone() is not None
 
         if not database_exists:
-            # Create the new database
             cursor.execute(f"CREATE DATABASE {database_name}")
             print(f"Database {database_name} created successfully")
         else:
@@ -39,68 +33,54 @@ def create_database(conn, database_name):
 
     except psy.Error as e:
         print("Error creating the database")
-        logging.basicConfig(filename='error_log.txt', level=logging.ERROR,
-                            format='%(asctime)s - %(levelname)s - %(message)s')
         logging.error(f'Error creating the database: {e}')
     finally:
         if cursor:
             cursor.close()
 
 
-def create_Table(conn, table_name, column):
+def create_table(conn, table_name, columns):
+    cursor = conn.cursor()
     try:
-        cursor = conn.cursor()
-
         create_table_query = f"CREATE TABLE IF NOT EXISTS {table_name} ("
-
-        for col, data_type in column.items():
-            create_table_query += f"{col} {data_type}, "
-
-        create_table_query = create_table_query.rstrip(', ')
+        create_table_query += ', '.join([f"{col} {data_type}" for col, data_type in columns.items()])
         create_table_query += ");"
-        cursor.execute(create_table_query)
 
+        cursor.execute(create_table_query)
         conn.commit()
 
         print(f"Table '{table_name}' created successfully.")
 
     except psy.Error as e:
-        print(f"Error creating table '{table_name}': {e}")
-        logging.basicConfig(filename='error_log.txt', level=logging.ERROR,
-                            format='%(asctime)s - %(levelname)s - %(message)s')
-        logging.error(f'Error creating table: {e}')
+        error_message = f"Error creating table '{table_name}': {e}"
+        print(error_message)
+        logging.error(error_message)
+        raise e
+
     finally:
         if cursor:
             cursor.close()
 
 
 def add_data_to_table(conn, data, table_name):
-    cursor = conn.cursor()
+    with conn.cursor() as cursor:
+        try:
+            keys = ', '.join(data.keys())
+            placeholders = ', '.join(['%s'] * len(data))
 
-    try:
-        # Assuming all lists in data have the same length
-        data_length = len(list(data.values())[0])
+            for values in zip(*data.values()):
+                insert_query = f"INSERT INTO {table_name} ({keys}) VALUES ({placeholders});"
+                cursor.execute(insert_query, values)
 
-        for i in range(data_length):
-            values = [data[column][i] for column in data]
-            placeholders = ', '.join(['%s'] * len(values))
-
-            # Construct the INSERT query
-            insert_query = f"INSERT INTO {table_name} ({', '.join(data.keys())}) VALUES ({placeholders});"
-
-            # Execute the query
-            cursor.execute(insert_query, tuple(values))
             conn.commit()
 
-        print(f"Data added to the table '{table_name}' successfully.")
+            print(f"Data added to the table '{table_name}' successfully.")
 
-    except psy.Error as e:
-        error_message = f"Error adding data to table '{table_name}': {e}"
-        print(error_message)
-        logging.error(error_message)
-
-    finally:
-        cursor.close()
+        except psy.Error as e:
+            error_message = f"Error adding data to table '{table_name}': {e}"
+            print(error_message)
+            logging.error(error_message)
+            raise e
 
 
 def query():
@@ -109,22 +89,24 @@ def query():
 
 # Example usage
 if __name__ == "__main__":
-    connection = Connection()  # Get a PostgreSQL connection
-    columns = {
+    setup_logging()
+    connection_ = connection()  # Get a PostgreSQL connection
+    columns_ = {
         "Student_ID": "SERIAL PRIMARY KEY",
         "Student_Age": "INTEGER",
         "Student_Name": "VARCHAR(255)",
         "Phone": "BIGINT"
     }
 
-    sample_data = {
+    sample_data_ = {
         "Student_Age": [25, 24],
         "Student_Name": ["John Doe", "Archit Sood"],
         "Phone": [1234567890, 3284883274]
     }
 
-    tablename = "Student"
-    if connection:
-        create_database(connection, "student_info")
-        create_Table(connection, tablename, columns)
-        add_data_to_table(connection, sample_data, tablename)
+    tablename_ = "Student"
+    if connection_:
+        create_database(connection_, "student_data")
+        create_table(connection_, tablename_, columns_)
+        add_data_to_table(connection_, sample_data_, tablename_)
+        connection_.close()  # Close the connection when done
