@@ -73,3 +73,7 @@ LINE 1: CREATE TABLE IF NOT EXISTS your_schema.Student (Student_ID S...
 LINE 1: CREATE TABLE IF NOT EXISTS.Student (Student_ID SERIAL PRIMAR...
                                   ^
 
+2023-12-07 17:21:21,598 - ERROR - Error creating table 'Student': syntax error at or near "\"
+LINE 1: \cNone
+        ^
+
