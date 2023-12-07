@@ -2,7 +2,7 @@ import psycopg2 as psy
 import logging
 
 
-def setup_logging():
+def log():
     logging.basicConfig(filename='error_log.txt', level=logging.ERROR,
                         format='%(asctime)s - %(levelname)s - %(message)s')
 
@@ -16,6 +16,7 @@ def connection():
     except psy.Error as e:
         print("Error connecting to PostgreSQL database")
         logging.error(f'Error connecting to PostgreSQL: {e}')
+        log()
         return None
 
 
@@ -47,21 +48,23 @@ def create_table(conn, table_name, columns):
         create_table_query += ");"
 
         cursor.execute(create_table_query)
-        conn.commit()
 
-        print(f"Table '{table_name}' created successfully.")
-
+        if cursor.rowcount == -1:  # Check if the last operation affected a row (returns -1 for DDL statements)
+            print(f"Table '{table_name}' created successfully.")
+            conn.commit()
+        else:
+            print("Table not created.")
     except psy.Error as e:
         error_message = f"Error creating table '{table_name}': {e}"
         print(error_message)
         logging.error(error_message)
         raise e
-
     finally:
         if cursor:
             cursor.close()
 
 
+"""
 def add_data_to_table(conn, data, table_name):
     with conn.cursor() as cursor:
         try:
@@ -85,11 +88,11 @@ def add_data_to_table(conn, data, table_name):
 
 def query():
     return None
-
+"""
 
 # Example usage
 if __name__ == "__main__":
-    setup_logging()
+    log()
     connection_ = connection()  # Get a PostgreSQL connection
     columns_ = {
         "Student_ID": "SERIAL PRIMARY KEY",
@@ -108,5 +111,5 @@ if __name__ == "__main__":
     if connection_:
         create_database(connection_, "student_data")
         create_table(connection_, tablename_, columns_)
-        add_data_to_table(connection_, sample_data_, tablename_)
+        # add_data_to_table(connection_, sample_data_, tablename_)
         connection_.close()  # Close the connection when done
